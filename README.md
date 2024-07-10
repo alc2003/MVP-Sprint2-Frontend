@@ -3,7 +3,8 @@
 Este projeto consiste em um protótipo de um terminal de cadastro de pacientes para a triagem em um hospital.
 Onde o paciente chega ao hospital, 
 e caso não conste na lista de pacientes, pode ser cadastrado pela equipe de enfermagem.
-Obs: Os dados vêm do backend da última sprint, para executa-lo em sua plenitude é necessário rodar junto o Terminal_triagem_Backend.
+Obs: Os dados vêm do backend da última sprint, para executa-lo em sua plenitude 
+é necessário rodar junto o Terminal_triagem_Backend(https://github.com/alc2003/MVP-Sprint2-Backend).
 
 
 ## Como executar o front
