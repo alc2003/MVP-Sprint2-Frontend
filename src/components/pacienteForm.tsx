@@ -84,6 +84,12 @@ export default function PacienteForm({paciente}) {
                                   {...register("telefone")}
                                   placeholder="Digite o telefone"/>
                 </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>CEP</Form.Label>
+                    <Form.Control type="text"
+                                  {...register("cep")}
+                                  placeholder="Digite o cep"/>
+                </Form.Group>
                 <div className="d-flex justify-content-between mt-4">
                     <Link href='/pacientes' className="btn btn-outline-dark">
                         Voltar
