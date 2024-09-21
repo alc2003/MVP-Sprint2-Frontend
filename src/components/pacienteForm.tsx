@@ -1,22 +1,22 @@
-import {Button, Form, InputGroup} from "react-bootstrap";
-import React, {useEffect} from "react";
+import { Button, Form, InputGroup } from "react-bootstrap";
+import React, { useEffect } from "react";
 import Link from "next/link";
-import {toast} from "react-toastify";
-import {Paciente} from "@/types/paciente.types";
-import {useForm} from "react-hook-form";
-import {confirmAlert} from "react-confirm-alert";
-import {useRouter} from "next/router";
-import {adicionarPaciente, alterarPaciente} from "@/services/api";
-import {getViaCep} from "@/services/api";
+import { toast } from "react-toastify";
+import { Paciente } from "@/types/paciente.types";
+import { useForm } from "react-hook-form";
+import { confirmAlert } from "react-confirm-alert";
+import { useRouter } from "next/router";
+import { adicionarPaciente, alterarPaciente } from "@/services/api";
+import { getViaCep } from "@/services/api";
 
-export default function PacienteForm({paciente}) {
+export default function PacienteForm({ paciente }) {
     const router = useRouter();
-    const {register, handleSubmit, reset, setValue, getValues} = useForm();
+    const { register, handleSubmit, reset, setValue, getValues } = useForm();
 
     // effect runs when user state is updated
     useEffect(() => {
         reset(paciente);
-        setTimeout(()=>{
+        setTimeout(() => {
             buscarCEP();
         }, 500)
 
@@ -24,7 +24,7 @@ export default function PacienteForm({paciente}) {
 
     const onSubmit = (data) => {
 
-        toast.loading('Aguarde...', {theme: 'dark', position: "bottom-center"})
+        toast.loading('Aguarde...', { theme: 'dark', position: "bottom-center" })
 
         const paciente = data as Paciente;
         if (paciente.id) {
@@ -66,23 +66,15 @@ export default function PacienteForm({paciente}) {
         return false;
     }
 
-    // const buscarCEP = () => {
-    //     const cep = getValues('cep');
-    //     console.log('buscando cep...', cep)
-    //     getViaCep(cep).then((data) => {
-    //         setValue('logradouro', endereco['logradouro'])
-    //         setValue('estado', estado['estado'])
-    //         console.log(data.data);
-    //     })
-    // };
-
     const buscarCEP = () => {
         const cep = getValues('cep');
         console.log('buscando cep...', cep);
-        
+
         getViaCep(cep).then((response) => {
             const data = response.data;
             setValue('logradouro', data['logradouro']);
+            setValue('bairro', data['bairro']);
+            setValue('localidade', data['localidade']);
             setValue('estado', data['uf']); // 'uf' é o campo que representa o estado na resposta do ViaCep
             console.log(data);
         }).catch((error) => {
@@ -104,40 +96,72 @@ export default function PacienteForm({paciente}) {
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Nome</Form.Label>
                     <Form.Control type="text"
-                                  {...register("nome")}
-                                  placeholder="Digite o nome"/>
+                        {...register("nome")}
+                        placeholder="Digite o nome" />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Telefone</Form.Label>
                     <Form.Control type="text"
-                                  {...register("telefone")}
-                                  placeholder="Digite o telefone"/>
+                        {...register("telefone")}
+                        placeholder="Digite o telefone" />
                 </Form.Group>
-
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Estado</Form.Label>
-                    <Form.Control type="text"
-                                  {...register("estado")}
-                                  placeholder="Digite o Estado"/>
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Logradouro</Form.Label>
-                    <Form.Control type="text"
-                                  {...register("logradouro")}
-                                  placeholder="Digite o Logradouro"/>
-                </Form.Group>
-                <InputGroup className="mb-30">
-                    <Button variant="outline-secondary" id="button-addon1" onClick={
-                        (e) =>
-                            buscarCEP()
-                    }>
-                        Buscar
-                    </Button>
+                <InputGroup className="mb-3">
                     <Form.Control
                         {...register("cep")}
                         placeholder="Digite o cep"
                     />
+                    <Button variant="outline-secondary" id="button-addon1" onClick={buscarCEP}>
+                        Buscar
+                    </Button>
                 </InputGroup>
+
+                <div className="row">
+                    <div className="col-md-6">
+                        <Form.Group className="mb-3" controlId="formBasicLogradouro">
+                            <Form.Label>Logradouro</Form.Label>
+                            <Form.Control
+                                type="text"
+                                {...register("logradouro")}
+                                disabled
+                            />
+                        </Form.Group>
+                    </div>
+                    <div className="col-md-6">
+                        <Form.Group className="mb-3" controlId="formBasicBairro">
+                            <Form.Label>Bairro</Form.Label>
+                            <Form.Control
+                                type="text"
+                                {...register("bairro")}
+                                disabled
+                            />
+                        </Form.Group>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col-md-6">
+                        <Form.Group className="mb-3" controlId="formBasicLocalidade">
+                            <Form.Label>Localidade</Form.Label>
+                            <Form.Control
+                                type="text"
+                                {...register("localidade")}
+                                disabled
+                            />
+                        </Form.Group>
+                    </div>
+                    <div className="col-md-6">
+                        <Form.Group className="mb-3" controlId="formBasicEstado">
+                            <Form.Label>Estado</Form.Label>
+                            <Form.Control
+                                type="text"
+                                {...register("estado")}
+                                disabled
+                            />
+                        </Form.Group>
+                    </div>
+
+                </div>
+
                 <div className="d-flex justify-content-between mt-4">
                     <Link href='/pacientes' className="btn btn-outline-dark">
                         Voltar

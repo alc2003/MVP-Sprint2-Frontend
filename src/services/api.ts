@@ -9,6 +9,7 @@ const getPacienteById = (id: number) => {
     return axios.get('http://127.0.0.1:5000/busca_paciente_id?id=' + id)
 }
 
+// API EXTERNA - VIACEP - utilizada para buscar as informações do endereço via parâmentro CEP
 const getViaCep = (cep: string) => {
     const url = '//viacep.com.br/ws/'+cep+'/json/';
     return axios.get(url);
