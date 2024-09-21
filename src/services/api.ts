@@ -9,6 +9,11 @@ const getPacienteById = (id: number) => {
     return axios.get('http://127.0.0.1:5000/busca_paciente_id?id=' + id)
 }
 
+const getViaCep = (cep: string) => {
+    const url = '//viacep.com.br/ws/'+cep+'/json/';
+    return axios.get(url);
+;}
+
 const adicionarPaciente = (paciente: Paciente) => {
     var form_data = new FormData();
     for ( var key in paciente ) {
@@ -40,5 +45,5 @@ const excluirPaciente = (id: number) => {
 }
 
 export {
-    getPacientes, getPacienteById, adicionarPaciente, alterarPaciente, excluirPaciente
+    getPacientes, getPacienteById, adicionarPaciente, alterarPaciente, excluirPaciente, getViaCep
 };
