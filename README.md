@@ -27,4 +27,14 @@ Para executar a interface basta executar o comando:
 npm run dev
 ```
 
+Para dar o build da imagem e construir a partir do Dockerfile, abra o terminal na pasta do seu projeto e execute o comando:
+
+docker build -t my_nextjs_app .
+
+e para rodar o docker após contruir a imagem, rode o container usando:
+
+docker run -d -p 3000:3000 my_nextjs_app
+
+
+
 Abra o [http://localhost:3000/#/](http://localhost:3000/#/) no navegador.
